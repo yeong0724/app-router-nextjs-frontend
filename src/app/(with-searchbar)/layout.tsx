@@ -1,11 +1,10 @@
-import { ReactNode } from "react";
+import Searchbar from "@/components/searchbar";
+import { Props } from "@/types";
 
-type LayoutProps = Readonly<{ children: ReactNode }>;
-
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children }: Props) {
   return (
     <div>
-      <div>임시서치바</div>
+      <Searchbar />
       <div>{children}</div>
     </div>
   );
