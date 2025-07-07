@@ -9,7 +9,5 @@ import { Props } from "@/types";
  *   대신 children 으로 Props를 전달해 사용하게 된다면 서버 클라이언트 그대로 사용이 가능하다.
  */
 export default function ClientComponent({ children }: Props) {
-  console.log("클라이언트 컴포넌트!");
-
   return <div>{children}</div>;
 }
