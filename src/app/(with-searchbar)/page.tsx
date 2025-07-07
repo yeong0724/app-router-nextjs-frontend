@@ -4,10 +4,8 @@
  *   실제로 console.log를 찍어봐도 브라우저에서는 전혀 로그가 찍히지 않는다.
  * - "use client"로 컴포넌트 상단에 표기해주면 이제부터 해당 컴포넌트는 Client-Component로 인식되어 일반적으로 우리가 아는 컴포넌트로 동작하게 된다.
  */
-// "use client";
-// import { useEffect } from "react";
+import styles from "@/app/(with-searchbar)/page.module.css";
 import ClientComponent from "@/components/client-component";
-import styles from "./page.module.css";
 import ServerComponent from "@/components/server-component";
 
 /**
@@ -18,8 +16,6 @@ import ServerComponent from "@/components/server-component";
  * 4. Server Component에서 Client Component에게 직렬화 되지 않는 Props(ex. Function ...)는 전달이 불가하다.
  */
 export default function Home() {
-  console.log("Home 컴포넌트 실행");
-
   return (
     <div className={styles.page}>
       인덱스 페이지

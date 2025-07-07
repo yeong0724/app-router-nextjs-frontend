@@ -1,3 +1,5 @@
+import ClientComponent from "@/components/client-component";
+
 type Props = {
   searchParams: Promise<{ q: string }>;
 };
@@ -8,8 +10,13 @@ type Props = {
 export default async function Page({ searchParams }: Props) {
   const { q } = await searchParams;
 
-  console.log("Search page props:", q);
-
   // 상태, 로직
-  return <div>Search 페이지</div>;
+  return (
+    <div>
+      Search 페이지
+      <ClientComponent>
+        <></>
+      </ClientComponent>
+    </div>
+  );
 }
