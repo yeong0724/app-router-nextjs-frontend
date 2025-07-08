@@ -1,6 +1,6 @@
 "use client";
 
-import { Props } from "@/types";
+import { Props } from "../types";
 
 /**
  * - Client Component에 Server Component를 직접 import 하게 되면 Server Component는

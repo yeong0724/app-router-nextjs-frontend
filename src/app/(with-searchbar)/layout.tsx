@@ -1,11 +1,15 @@
-import Searchbar from "@/components/searchbar";
-import { Props } from "@/types";
+import { ReactNode } from "react";
+import Searchbar from "../../components/searchbar";
 
-export default function Layout({ children }: Props) {
+export default function Layout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <div>
       <Searchbar />
-      <div>{children}</div>
+      {children}
     </div>
   );
 }
