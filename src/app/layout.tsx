@@ -1,12 +1,9 @@
-import "./globals.css";
 import Link from "next/link";
-import style from "./layout.module.css";
+import { type LayoutProps } from "@/types";
+import style from "@/app/layout.module.css";
+import "@/app/globals.css";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body>

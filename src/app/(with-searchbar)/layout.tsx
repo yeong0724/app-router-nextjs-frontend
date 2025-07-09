@@ -1,11 +1,7 @@
-import { ReactNode } from "react";
-import Searchbar from "../../components/searchbar";
+import Searchbar from "@/components/searchbar";
+import { type LayoutProps } from "@/types";
 
-export default function Layout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       <Searchbar />

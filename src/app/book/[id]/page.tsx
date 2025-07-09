@@ -1,4 +1,4 @@
-import style from "./page.module.css";
+import style from "@/app/book/[id]/page.module.css";
 
 const mockData = {
   id: 1,
@@ -12,14 +12,15 @@ const mockData = {
     "https://shopping-phinf.pstatic.net/main_3888828/38888282618.20230913071643.jpg",
 };
 
-export default async function Page({
-  params,
-}: {
+type Props = {
   params: Promise<{ id: string | string[] }>;
-}) {
+};
+
+export default async function Page({ params }: Props) {
   const { id } = await params;
 
-  const { title, subTitle, description, author, publisher, coverImgUrl } = mockData;
+  const { title, subTitle, description, author, publisher, coverImgUrl } =
+    mockData;
 
   return (
     <div className={style.container}>

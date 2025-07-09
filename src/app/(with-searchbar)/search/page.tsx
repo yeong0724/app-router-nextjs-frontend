@@ -1,11 +1,11 @@
 import books from "@/mock/books.json";
 import BookItem from "@/components/book-item";
 
-export default async function Page({
-  searchParams,
-}: {
+type Props = {
   searchParams: Promise<{ q?: string }>;
-}) {
+};
+
+export default async function Page({ searchParams }: Props) {
   const { q } = await searchParams;
 
   return (
