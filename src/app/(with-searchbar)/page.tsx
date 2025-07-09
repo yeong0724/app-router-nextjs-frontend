@@ -15,11 +15,13 @@ async function AllBooks() {
    *  - 데이터 페치 결과를 저장하지 않는 옵션
    *  - 캐싱 처리를 하지 않음 (cache skip)
    *
-   * 3. next: { revalidate: 10 }
+   * 3. next: { revalidate: 10 } <<- 10초 추기
    *  - 특정 시간을 주기로 캐시를 업데이트 하는 옵션
    *  - page router의 ISR 방식과 유사한 개념
    *
    * 4. next: { tags: ['a'] }
+   *  - 요청이 들어왔을 때 데이터를 최신화 하는 방식
+   *  - On-Demand Revalidate 방식과 유사한 옵션
    */
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
