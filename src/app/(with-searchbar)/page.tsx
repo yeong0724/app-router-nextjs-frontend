@@ -7,9 +7,25 @@ import { type BookData } from "@/types";
  * (해당 Home 컴포넌트는 서버에서만 실행되는 Server Component이기에 브러우저 log에 찍히지 않음)
  */
 async function AllBooks() {
+  /**
+   * 1. cache: "force-cache"
+   *  - 데이터 패치 결과를 캐시처리 하도록 하는 옵션
+   *
+   * 2. cache: "no-store"
+   *  - 데이터 페치 결과를 저장하지 않는 옵션
+   *  - 캐싱 처리를 하지 않음 (cache skip)
+   *
+   * 3. next: { revalidate: 10 }
+   *  - 특정 시간을 주기로 캐시를 업데이트 하는 옵션
+   *  - page router의 ISR 방식과 유사한 개념
+   *
+   * 4. next: { tags: ['a'] }
+   */
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
+    { cache: "no-store" }
   );
+
   if (!response.ok) {
     return <div>오류가 발생했습니다 ...</div>;
   }
@@ -27,7 +43,8 @@ async function AllBooks() {
 
 async function RecommendBooks() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
+    { next: { revalidate: 3 } }
   );
 
   if (!response.ok) {
