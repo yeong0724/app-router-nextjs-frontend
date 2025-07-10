@@ -3,7 +3,7 @@ import style from "@/app/(with-searchbar)/page.module.css";
 import { type BookData } from "@/types";
 import { delay } from "@/utils/delay";
 import { Suspense } from "react";
-import Loading from "@/components/loading";
+import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 
 /**
  * App Router 방식에서는 Server Component에 async 만 붙여주면 서버에서 API 통신이 가능하다
@@ -93,13 +93,13 @@ export default function Home() {
     <div className={style.container}>
       <section>
         <h3>지금 추천하는 도서</h3>
-        <Suspense fallback={<Loading message="도서를 불러오는 중입니다." />}>
+        <Suspense fallback={<BookListSkeleton count={2} />}>
           <RecommendBooks />
         </Suspense>
       </section>
       <section>
         <h3>등록된 모든 도서</h3>
-        <Suspense fallback={<Loading message="도서를 불러오는 중입니다." />}>
+        <Suspense fallback={<BookListSkeleton count={3} />}>
           <AllBooks />
         </Suspense>
       </section>
