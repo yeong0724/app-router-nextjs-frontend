@@ -3,6 +3,18 @@ import style from "@/app/(with-searchbar)/page.module.css";
 import { type BookData } from "@/types";
 
 /**
+ * [Route Segment 옵션]
+ * - dynamic 값을 export 하여 특정 페이지의 유형을 강제로 설정할 수 있다.
+ * - Next App은 자체적으로 Dynamic/Static을 구분하여 빌드해 주므로 권장되지 않는 옵션이다.
+ * 1. auto: 기본값, 아무 설정값도 강제하지 않음
+ * 2. force-dynamic: 강제로 페이지를 Dynamic Page로 설정
+ * 3. force-static: 강제로 페이지를 Static Page로 설정
+ * 4. error: 강제로 페이지를 Static Page로 설정하지만 Static이 되면 안되는 페이지라면 빌드 단계에서 에러를 발생시킴
+ *   ex) /search/page.tsx
+ */
+export const dynamic = "auto";
+
+/**
  * App Router 방식에서는 Server Component에 async 만 붙여주면 서버에서 API 통신이 가능하다
  * (해당 Home 컴포넌트는 서버에서만 실행되는 Server Component이기에 브러우저 log에 찍히지 않음)
  */

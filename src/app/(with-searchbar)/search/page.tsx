@@ -1,6 +1,8 @@
 import BookItem from "@/components/book-item";
 import { type BookData } from "@/types";
 
+export const dynamic = "error";
+
 type Props = {
   searchParams: Promise<{ q?: string }>;
 };
