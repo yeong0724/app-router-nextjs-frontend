@@ -1,5 +1,6 @@
 import BookItem from "@/components/book-item";
 import Loading from "@/components/loading";
+import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 import { type BookData } from "@/types";
 import { Suspense } from "react";
 
@@ -59,7 +60,7 @@ export default async function Page({ searchParams }: Props) {
 
   return (
     // Suspense 컴포넌트는 페이지가 다시 로드 되거나, key값이 바뀌게 되는 경우에 fallback 컴포넌트를 우선 렌더링해준다.
-    <Suspense key={q} fallback={<Loading />}>
+    <Suspense key={q} fallback={<BookListSkeleton count={1} />}>
       <SearchResult q={q} />
     </Suspense>
   );
