@@ -1,9 +1,6 @@
-import style from "@/app/book/[id]/page.module.css";
+import { createReviewAction } from "@/actions/create-review.action";
 import { notFound } from "next/navigation";
-
-type Props = {
-  params: Promise<{ id: string | string[] }>;
-};
+import style from "@/app/book/[id]/page.module.css";
 
 /**
  * [Full Route Cache 동적 경로에 적용하기]
@@ -18,11 +15,9 @@ export function generateStaticParams() {
   return [{ id: "1" }, { id: "2" }, { id: "3" }];
 }
 
-export default async function Page({ params }: Props) {
-  const { id } = await params;
-
+async function BookDetail({ bookId }: { bookId: string }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${id}`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${bookId}`
   );
 
   if (!response.ok) {
@@ -39,7 +34,7 @@ export default async function Page({ params }: Props) {
   const { title, subTitle, description, author, publisher, coverImgUrl } = book;
 
   return (
-    <div className={style.container}>
+    <section>
       <div
         className={style.cover_img_container}
         style={{ backgroundImage: `url('${coverImgUrl}')` }}
@@ -52,6 +47,34 @@ export default async function Page({ params }: Props) {
         {author} | {publisher}
       </div>
       <div className={style.description}>{description}</div>
+    </section>
+  );
+}
+
+function ReviewEditor({ bookId }: { bookId: string }) {
+  return (
+    <section>
+      <form action={createReviewAction} className={style["form-container"]}>
+        <input name="bookId" value={bookId} hidden readOnly />
+        <input required name="content" placeholder="리뷰 내용" />
+        <input required name="author" placeholder="작성자" />
+        <button type="submit">작성하기</button>
+      </form>
+    </section>
+  );
+}
+
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function Page({ params }: Props) {
+  const { id } = await params;
+
+  return (
+    <div className={style.container}>
+      <BookDetail bookId={id} />
+      <ReviewEditor bookId={id} />
     </div>
   );
 }

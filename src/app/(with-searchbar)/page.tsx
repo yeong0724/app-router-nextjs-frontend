@@ -12,7 +12,7 @@ const DOMAIN = process.env.NEXT_PUBLIC_API_SERVER_URL;
  * (해당 Home 컴포넌트는 서버에서만 실행되는 Server Component이기에 브러우저 log에 찍히지 않음)
  */
 async function AllBooks() {
-  await delay(2000);
+  await delay(1000);
 
   /**
    * 1. cache: "force-cache"
@@ -48,7 +48,7 @@ async function AllBooks() {
 }
 
 async function RecommendBooks() {
-  await delay(3000);
+  await delay(1000);
 
   const response = await fetch(`${DOMAIN}/book/random`, {
     next: { revalidate: 3 },
