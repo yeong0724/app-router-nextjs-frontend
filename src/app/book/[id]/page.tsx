@@ -1,6 +1,8 @@
-import { createReviewAction } from "@/actions/create-review.action";
 import { notFound } from "next/navigation";
+import { ReviewData } from "@/types";
 import style from "@/app/book/[id]/page.module.css";
+import ReviewItem from "@/components/book/review-item";
+import ReviewEditor from "@/components/book/review-editor";
 
 /**
  * [Full Route Cache 동적 경로에 적용하기]
@@ -51,15 +53,22 @@ async function BookDetail({ bookId }: { bookId: string }) {
   );
 }
 
-function ReviewEditor({ bookId }: { bookId: string }) {
+async function ReviewList({ bookId }: { bookId: string }) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`Review fetch failed : ${response.statusText}`);
+  }
+
+  const reviews: ReviewData[] = await response.json();
+
   return (
     <section>
-      <form action={createReviewAction} className={style["form-container"]}>
-        <input name="bookId" value={bookId} hidden readOnly />
-        <input required name="content" placeholder="리뷰 내용" />
-        <input required name="author" placeholder="작성자" />
-        <button type="submit">작성하기</button>
-      </form>
+      {reviews.map((review) => (
+        <ReviewItem key={`review-item-${review.id}`} {...review} />
+      ))}
     </section>
   );
 }
@@ -75,6 +84,7 @@ export default async function Page({ params }: Props) {
     <div className={style.container}>
       <BookDetail bookId={id} />
       <ReviewEditor bookId={id} />
+      <ReviewList bookId={id} />
     </div>
   );
 }
