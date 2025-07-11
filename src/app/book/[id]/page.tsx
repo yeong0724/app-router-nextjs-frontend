@@ -13,9 +13,12 @@ import ReviewEditor from "@/components/book/review-editor";
  */
 export const dynamicParams = true;
 
-export function generateStaticParams() {
-  return [{ id: "1" }, { id: "2" }, { id: "3" }];
-}
+/**
+ * 반환하는 Params 배열에 따라 빌드시에 Route Cache 페이지를 생성한다.
+ */
+// export function generateStaticParams() {
+//   return [{ id: "1" }, { id: "2" }, { id: "3" }];
+// }
 
 async function BookDetail({ bookId }: { bookId: string }) {
   const response = await fetch(
@@ -54,9 +57,12 @@ async function BookDetail({ bookId }: { bookId: string }) {
 }
 
 async function ReviewList({ bookId }: { bookId: string }) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`
-  );
+  const API_URL = `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`;
+  const response = await fetch(API_URL, {
+    next: {
+      tags: [`review-${bookId}`],
+    },
+  });
 
   if (!response.ok) {
     throw new Error(`Review fetch failed : ${response.statusText}`);
