@@ -5,11 +5,15 @@ import { delay } from "@/utils/delay";
 import { Suspense } from "react";
 import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 
+const DOMAIN = process.env.NEXT_PUBLIC_API_SERVER_URL;
+
 /**
  * App Router 방식에서는 Server Component에 async 만 붙여주면 서버에서 API 통신이 가능하다
  * (해당 Home 컴포넌트는 서버에서만 실행되는 Server Component이기에 브러우저 log에 찍히지 않음)
  */
 async function AllBooks() {
+  await delay(2000);
+
   /**
    * 1. cache: "force-cache"
    *  - 데이터 패치 결과를 캐시처리 하도록 하는 옵션
@@ -26,13 +30,7 @@ async function AllBooks() {
    *  - 요청이 들어왔을 때 데이터를 최신화 하는 방식
    *  - On-Demand Revalidate 방식과 유사한 옵션
    */
-
-  await delay(2000);
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
-    { cache: "no-store" }
-  );
+  const response = await fetch(`${DOMAIN}/book`, { cache: "no-store" });
 
   if (!response.ok) {
     return <div>오류가 발생했습니다 ...</div>;
@@ -52,10 +50,9 @@ async function AllBooks() {
 async function RecommendBooks() {
   await delay(3000);
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
-    { next: { revalidate: 3 } }
-  );
+  const response = await fetch(`${DOMAIN}/book/random`, {
+    next: { revalidate: 3 },
+  });
 
   if (!response.ok) {
     return <div>오류가 발생했습니다...</div>;
