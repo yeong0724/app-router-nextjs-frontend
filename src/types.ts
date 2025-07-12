@@ -30,3 +30,8 @@ export interface ServerActionResponse<T> {
   message: string;
   response: T;
 }
+
+export type FormServerAction<T = any> = (
+  state: ServerActionResponse<T>,
+  formData: FormData
+) => Promise<ServerActionResponse<T>>;
