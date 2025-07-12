@@ -7,17 +7,10 @@
 
 "use client";
 
-import { useRouter } from "next/navigation";
 import { startTransition } from "react";
+import { useRouter } from "next/navigation";
+import type { ErrorProps } from "@/types";
 
-type ErrorProps = {
-  error: Error;
-  reset: () => void;
-};
-
-/**
- *
- */
 export default function Error({ error, reset }: ErrorProps) {
   const router = useRouter();
 

@@ -21,6 +21,7 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "warn",
       "@next/next/no-img-element": "off",
       "jsx-a11y/alt-text": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ];

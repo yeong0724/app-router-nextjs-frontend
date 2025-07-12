@@ -1,8 +1,6 @@
-import BookItem from "@/components/book-item";
-import Loading from "@/components/loading";
-import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
-import { type BookData } from "@/types";
 import { Suspense } from "react";
+import SearchResult from "@/components/search/search-result";
+import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 
 /**
  * [Streaming]
@@ -22,32 +20,6 @@ import { Suspense } from "react";
  * loading 컴포넌트만으로는 온전히 사용자 경험(UI/UX)를 개선하는데 한계가 있다. (주의사항 3, 4 참조)
  * 그래서 Next App은 Suspense라는 컴포넌트를 제공하여 개발자는 보다 더 세밀하게 스트리밍 기능을 활용 할 수 있다.
  */
-
-type SearchResultProps = {
-  q: string;
-};
-
-async function SearchResult({ q }: SearchResultProps) {
-  const DOMAIN = process.env.NEXT_PUBLIC_API_SERVER_URL;
-
-  const response = await fetch(`${DOMAIN}/book/search?q=${q}`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    return <div>오류가 발생했습니다...</div>;
-  }
-
-  const books: BookData[] = await response.json();
-
-  return (
-    <div>
-      {books.map((book) => (
-        <BookItem key={book.id} {...book} />
-      ))}
-    </div>
-  );
-}
 
 // export const dynamic = "error";
 
