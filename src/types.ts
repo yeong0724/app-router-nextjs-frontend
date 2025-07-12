@@ -24,3 +24,9 @@ export interface ReviewData {
   createdAt: string;
   bookId: number;
 }
+
+export interface ServerActionResponse<T> {
+  error: boolean;
+  message: string;
+  response: T;
+}

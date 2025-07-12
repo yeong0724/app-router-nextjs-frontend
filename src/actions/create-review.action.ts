@@ -5,22 +5,36 @@
  */
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import type { ServerActionResponse } from "@/types";
+import { delay } from "@/utils/delay";
+import { revalidateTag } from "next/cache";
 
-export async function createReviewAction(formData: FormData) {
+export async function createReviewAction(
+  state: ServerActionResponse<any>,
+  formData: FormData
+): Promise<ServerActionResponse<any>> {
   const bookId = formData.get("bookId")?.toString();
   const content = formData.get("content")?.toString();
   const author = formData.get("author")?.toString();
 
   if (!bookId || !content || !author) {
-    return;
+    return {
+      error: true,
+      message: "리뷰 내용과 작성자를 입력해주세요",
+      response: "",
+    };
   }
 
   try {
-    await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/review`, {
-      method: "POST",
-      body: JSON.stringify({ bookId, content, author }),
-    });
+    await delay(2000);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review`,
+      {
+        method: "POST",
+        body: JSON.stringify({ bookId, content, author }),
+      }
+    );
 
     /**
      * 전달 받은 URL에 대한 페이지를 재검증하여 API를 다사 요청해서 새로 등록한 리뷰가 재조회 된다.
@@ -44,12 +58,20 @@ export async function createReviewAction(formData: FormData) {
      * 5. revalidateTag(tagName_1)
      *   - 태그 값을 기준으로 데이터 캐시 재검증
      *   - fetch(API URL, { next: { tags: [tagName_1, tagName_2] } });
-     *   - 특정 tag명의 API만 재검증이 가능한 방법으로 효율적이고 유용한 방법이다.
+     *   - 특정 tag명의 API만 재검증이 가능한 방법으로 효율적이고 유용한 방법이다. (불필요한 컴포넌트 렌더링을 최소화)
      */
-
     revalidateTag(`review-${bookId}`);
+
+    return {
+      error: false,
+      message: "리뷰 내용과 작성자를 입력해주세요",
+      response: response.json(),
+    };
   } catch (err) {
-    console.error(err);
-    return;
+    return {
+      response: err,
+      error: true,
+      message: `리뷰 저장에 실패했습니다 : ${err}`,
+    };
   }
 }
