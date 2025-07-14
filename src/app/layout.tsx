@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { type BookData, type LayoutProps } from "@/types";
+import type { BookData, LayoutProps } from "@/types";
 import style from "@/app/layout.module.css";
 import "@/app/globals.css";
 
@@ -33,7 +33,7 @@ async function Footer() {
   );
 }
 
-export default function RootLayout({ children }: LayoutProps) {
+export default function RootLayout({ children, modal }: LayoutProps) {
   return (
     <html lang="en">
       <body>
@@ -44,6 +44,8 @@ export default function RootLayout({ children }: LayoutProps) {
           <main>{children}</main>
           <Footer />
         </div>
+        {modal}
+        <div id="modal-root"></div>
       </body>
     </html>
   );
