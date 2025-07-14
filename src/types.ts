@@ -5,7 +5,10 @@ export type ErrorProps = {
   reset: () => void;
 };
 
-export type LayoutProps = Readonly<{ children: ReactNode }>;
+export type LayoutProps = Readonly<{
+  children: ReactNode;
+  modal?: ReactNode;
+}>;
 
 export interface BookData {
   id: number;
