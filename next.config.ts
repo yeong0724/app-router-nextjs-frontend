@@ -8,10 +8,6 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
-  // images: {
-  //   formats: ["image/avif", "image/webp"],
-  //   domains: ["shopping-phinf.pstatic.net"],
-  // },
   images: {
     remotePatterns: [
       {
@@ -20,7 +16,7 @@ const nextConfig: NextConfig = {
         pathname: "**",
       },
     ],
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"],
   },
 };
 
