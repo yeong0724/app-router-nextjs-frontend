@@ -1,7 +1,6 @@
 import BookItem from "@/components/book/book-item";
 import style from "@/app/(with-searchbar)/page.module.css";
 import { type BookData } from "@/types";
-import { delay } from "@/utils/delay";
 import { Suspense } from "react";
 import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 import { Metadata } from "next";
@@ -13,8 +12,6 @@ const DOMAIN = process.env.NEXT_PUBLIC_API_SERVER_URL;
  * (해당 Home 컴포넌트는 서버에서만 실행되는 Server Component이기에 브러우저 log에 찍히지 않음)
  */
 async function AllBooks() {
-  await delay(1000);
-
   /**
    * 1. cache: "force-cache"
    *  - 데이터 패치 결과를 캐시처리 하도록 하는 옵션
@@ -49,8 +46,6 @@ async function AllBooks() {
 }
 
 async function RecommendBooks() {
-  await delay(1000);
-
   const response = await fetch(`${DOMAIN}/book/random`, {
     next: { revalidate: 3 },
   });

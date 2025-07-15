@@ -18,9 +18,21 @@ export const dynamicParams = true;
 /**
  * 반환하는 Params 배열에 따라 빌드시에 Route Cache 페이지를 생성한다.
  */
-// export function generateStaticParams() {
-//   return [{ id: "1" }, { id: "2" }, { id: "3" }];
-// }
+export async function generateStaticParams() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`
+  );
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const books: BookData[] = await response.json();
+
+  return books.map((book) => ({
+    id: book.id.toString(),
+  }));
+}
 
 async function BookDetail({ bookId }: { bookId: string }) {
   const response = await fetch(

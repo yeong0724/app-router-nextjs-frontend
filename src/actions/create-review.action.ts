@@ -5,14 +5,10 @@
  */
 "use server";
 
-import type { ServerActionResponse } from "@/types";
-import { delay } from "@/utils/delay";
+import type { FormServerAction } from "@/types";
 import { revalidateTag } from "next/cache";
 
-export async function createReviewAction(
-  state: ServerActionResponse<any>,
-  formData: FormData
-): Promise<ServerActionResponse<any>> {
+export const createReviewAction: FormServerAction = async (state, formData) => {
   const bookId = formData.get("bookId")?.toString();
   const content = formData.get("content")?.toString();
   const author = formData.get("author")?.toString();
@@ -26,8 +22,6 @@ export async function createReviewAction(
   }
 
   try {
-    await delay(2000);
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review`,
       {
@@ -74,4 +68,4 @@ export async function createReviewAction(
       message: `리뷰 저장에 실패했습니다 : ${err}`,
     };
   }
-}
+};
