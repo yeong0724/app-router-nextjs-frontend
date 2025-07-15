@@ -4,6 +4,7 @@ import { type BookData } from "@/types";
 import { delay } from "@/utils/delay";
 import { Suspense } from "react";
 import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
+import { Metadata } from "next";
 
 const DOMAIN = process.env.NEXT_PUBLIC_API_SERVER_URL;
 
@@ -79,8 +80,17 @@ async function RecommendBooks() {
  * 4. error: 강제로 페이지를 Static Page로 설정하지만 Static이 되면 안되는 페이지라면 빌드 단계에서 에러를 발생시킴
  *   ex) /search/page.tsx
  */
-
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "한입 북스",
+  description: "한입 북스에 등록된 도서를 만나보세요.",
+  openGraph: {
+    title: "한입 북스",
+    description: "한입 북스에 등록된 도서를 만나보세요.",
+    images: ["/thumbnail.png"],
+  },
+};
 
 /**
  * root 페이지는 현재 static 컴포넌트이기 때문에 스트리밍 기능을 제공하기 위해서는 강제로 dynamic 컴포넌트로 설정해줘야 한다.
