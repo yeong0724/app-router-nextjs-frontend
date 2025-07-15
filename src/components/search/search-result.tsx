@@ -1,5 +1,5 @@
 import { BookData } from "@/types";
-import BookItem from "@/components/book-item";
+import BookItem from "@/components/book/book-item";
 
 type SearchResultProps = {
   q: string;

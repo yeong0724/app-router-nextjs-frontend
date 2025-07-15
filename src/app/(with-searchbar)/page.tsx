@@ -1,4 +1,4 @@
-import BookItem from "@/components/book-item";
+import BookItem from "@/components/book/book-item";
 import style from "@/app/(with-searchbar)/page.module.css";
 import { type BookData } from "@/types";
 import { delay } from "@/utils/delay";

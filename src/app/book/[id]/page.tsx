@@ -3,6 +3,7 @@ import { ReviewData } from "@/types";
 import style from "@/app/book/[id]/page.module.css";
 import ReviewItem from "@/components/book/review-item";
 import ReviewEditor from "@/components/book/review-editor";
+import Image from "next/image";
 
 /**
  * [Full Route Cache 동적 경로에 적용하기]
@@ -44,7 +45,12 @@ async function BookDetail({ bookId }: { bookId: string }) {
         className={style.cover_img_container}
         style={{ backgroundImage: `url('${coverImgUrl}')` }}
       >
-        <img src={coverImgUrl} />
+        <Image
+          src={coverImgUrl}
+          width={240}
+          height={300}
+          alt={`도서 ${title}의 표지 이미지`}
+        />
       </div>
       <div className={style.title}>{title}</div>
       <div className={style.subTitle}>{subTitle}</div>
