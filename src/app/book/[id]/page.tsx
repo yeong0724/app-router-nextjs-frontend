@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
-import { ReviewData } from "@/types";
+import Image from "next/image";
+import { Metadata } from "next";
 import style from "@/app/book/[id]/page.module.css";
 import ReviewItem from "@/components/book/review-item";
 import ReviewEditor from "@/components/book/review-editor";
-import Image from "next/image";
+import type { BookData, ReviewData } from "@/types";
 
 /**
  * [Full Route Cache 동적 경로에 적용하기]
@@ -88,6 +89,32 @@ async function ReviewList({ bookId }: { bookId: string }) {
 type Props = {
   params: Promise<{ id: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata | null> {
+  const { id } = await params;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${id}`,
+    { cache: "no-store" }
+  );
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const book: BookData = await response.json();
+
+  return {
+    title: `${book.title} - 한입북스`,
+    description: `${book.description}`,
+    openGraph: {
+      title: `${book.title} - 한입북스`,
+      description: `${book.description}`,
+      images: [book.coverImgUrl],
+    },
+  };
+}
 
 export default async function Page({ params }: Props) {
   const { id } = await params;
