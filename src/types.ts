@@ -7,7 +7,7 @@ export type ErrorProps = {
 
 export type LayoutProps = Readonly<{
   children: ReactNode;
-  modal?: ReactNode;
+  modal: ReactNode;
 }>;
 
 export interface BookData {

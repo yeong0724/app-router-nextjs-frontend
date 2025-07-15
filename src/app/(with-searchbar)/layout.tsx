@@ -1,7 +1,10 @@
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import Searchbar from "@/components/searchbar";
 import Loading from "@/components/loading";
-import { type LayoutProps } from "@/types";
+
+export type LayoutProps = Readonly<{
+  children: ReactNode;
+}>;
 
 /**
  * [Suspense]
